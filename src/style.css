@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;1,300;1,400&display=swap');
-
 body {
   border: 0;
   padding: 0;
@@ -19,8 +18,10 @@ input:focus {
   outline: none;
 }
 
-input[type='text'] {
-  font-size: 1em;
+input[type=text] {
+  font-size: 1.2em;
+  padding: 15px 0;
+  background-color: transparent;
 }
 
 .title {
@@ -31,20 +32,25 @@ input[type='text'] {
   padding: 10px;
 }
 
-.tsk {
+#addForm .tsk {
   border: none;
+  outline: none;
+  padding: 1em;
+  width: 30em;
 }
 
 .list {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 13px;
   border-bottom: 1px solid grey;
+  padding: 0 10px
 }
 
-.input .tsk {
-  outline: none;
+.list-input {
+  width: 33em;
+  border: none;
+  outline: none
 }
 
 .arrow svg {
@@ -52,9 +58,9 @@ input[type='text'] {
 }
 
 .form form {
-  padding: 15px;
-  border-bottom: 0.2px solid grey;
-  border-top: 0.2px solid grey;
+  /* padding: 15px; */
+  border-bottom: .2px solid grey;
+  border-top: .2px solid grey;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -65,9 +71,14 @@ footer {
   border-top: 1px;
   background-color: whitesmoke;
   padding: 10px;
-  box-shadow: 2px 7px 16px -8px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 2px 7px 16px -8px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 2px 7px 16px -8px rgba(0, 0, 0, 0.75);
+  box-shadow: 2px 7px 16px -8px rgba(0,0,0,0.75);
+-webkit-box-shadow: 2px 7px 16px -8px rgba(0,0,0,0.75);
+-moz-box-shadow: 2px 7px 16px -8px rgba(0,0,0,0.75);
+}
+
+footer p:hover{
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 footer p {
@@ -76,7 +87,6 @@ footer p {
   font-family: 'Open Sans', sans-serif;
 }
 
-footer p:hover {
-  cursor: pointer;
-  text-decoration: underline;
+i.delete {
+  display: none;
 }
