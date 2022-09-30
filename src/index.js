@@ -51,7 +51,7 @@ activities.innerHTML = task;
 const edit = () => {
 // Grabbing all the input fields in the various items  
   const listInputs = document.querySelectorAll('.list-input');
-  listInputs.forEach((item, id) => {
+  listInputs.forEach((item, inputIndex) => {
     // Traverse the DOM to get the parent of the item
     item.addEventListener('focus', () => {
       item.parentElement.parentElement.style.background = 'rgb(255, 255, 193)';
@@ -63,6 +63,19 @@ const edit = () => {
       item.parentElement.parentElement.style.background = 'white';
       item.parentElement.nextElementSibling.style.display = 'block';
       item.parentElement.parentElement.lastElementChild.style.display = 'none';
+    });
+
+    // updating the task in the localstorage
+    item.addEventListener('change', () => {
+      const newValue = item.value;
+      tasks.forEach((item, index) => {
+        if (inputIndex === index) {
+          item.description = newValue;
+          const convertedTasks = JSON.stringify(tasks);
+          localStorage.setItem('data', convertedTasks);
+        }
+
+      });
     });
   }); 
 };
