@@ -1,3 +1,5 @@
+/* eslint-disable arrow-body-style */
+
 import './style.css';
 
 // Grabbing the DOM element for the task container
@@ -10,14 +12,15 @@ const input = document.querySelector('.tsk');
 const form = document.querySelector('#addForm');
 
 // Declaring the array to hold the various tasks
-const tasks = JSON.parse(localStorage.getItem('data')) || [];
+let tasks = JSON.parse(localStorage.getItem('data')) || [];
+
 // Add toDo to the local storage
 const addToDo = () => {
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', () => {
     const toDo = {
       description: input.value,
       completed: false,
-      index: tasks.length + 1
+      index: tasks.length + 1,
     };
     tasks.push(toDo);
     const convertedTasks = JSON.stringify(tasks);
@@ -32,8 +35,8 @@ const displayToDos = () => {
   const sortedTasks = tasks.sort((a, b) => a.index - b.index);
   let task = '';
   sortedTasks.forEach((item) => {
-// Append HTML code for various tasks
-  task += `<div class="list">
+    // Append HTML code for various tasks
+    task += `<div class="list" key="${item.index}">
   <div class="input">
     <input class="tsk" type="checkbox" />
     <input class="tsk list-input" type="text" value="${item.description}" />
@@ -42,14 +45,14 @@ const displayToDos = () => {
   <i class="fa-solid fa-trash delete"></i>
 </div>
 `;
-// Inserting the items in the activities section
-activities.innerHTML = task;
+    // Inserting the items in the activities section
+    activities.innerHTML = task;
   });
 };
 
-// Edit an item in the array 
+// Edit an item in the array
 const edit = () => {
-// Grabbing all the input fields in the various items  
+// Grabbing all the input fields in the various items
   const listInputs = document.querySelectorAll('.list-input');
   listInputs.forEach((item, inputIndex) => {
     // Traverse the DOM to get the parent of the item
@@ -65,7 +68,6 @@ const edit = () => {
       item.parentElement.parentElement.lastElementChild.style.display = 'none';
     });
 
-    // updating the task in the localstorage
     item.addEventListener('change', () => {
       const newValue = item.value;
       tasks.forEach((item, index) => {
@@ -74,12 +76,40 @@ const edit = () => {
           const convertedTasks = JSON.stringify(tasks);
           localStorage.setItem('data', convertedTasks);
         }
-
       });
     });
-  }); 
+  });
+};
+// Remove Section
+const remove = () => {
+  const deleteButtons = document.querySelectorAll('.delete');
+  deleteButtons.forEach((item) => {
+    item.addEventListener('mousedown', () => {
+      const key = item.parentElement.getAttribute('key');
+      const results = tasks.filter((task) => String(task.index) !== String(key));
+
+      // Update the index of the remaining items and return them
+      const updatedTasks = results.map((task, oldIndex) => {
+        return {
+          ...task,
+          index: oldIndex + 1,
+        };
+      });
+      // console.log(updatedTasks)
+      tasks = updatedTasks;
+      item.parentElement.remove();
+      // Updating LocalStorage
+      const convertedTasks = JSON.stringify(tasks);
+      localStorage.setItem('data', convertedTasks);
+      // displayToDos();
+      window.location.reload();
+    });
+  });
 };
 
 addToDo();
 displayToDos();
 edit();
+remove();
+
+// background-color: rgb(255, 255, 193);

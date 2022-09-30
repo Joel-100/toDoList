@@ -89,4 +89,5 @@ footer p {
 
 i.delete {
   display: none;
+  cursor: pointer;
 }
