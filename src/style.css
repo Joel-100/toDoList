@@ -20,7 +20,9 @@ input:focus {
 }
 
 input[type='text'] {
-  font-size: 1em;
+  font-size: 1.2em;
+  padding: 15px 0;
+  background-color: transparent;
 }
 
 .title {
@@ -31,19 +33,24 @@ input[type='text'] {
   padding: 10px;
 }
 
-.tsk {
+#addForm .tsk {
   border: none;
+  outline: none;
+  padding: 1em;
+  width: 30em;
 }
 
 .list {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 13px;
   border-bottom: 1px solid grey;
+  padding: 0 10px;
 }
 
-.input .tsk {
+.list-input {
+  width: 33em;
+  border: none;
   outline: none;
 }
 
@@ -52,7 +59,7 @@ input[type='text'] {
 }
 
 .form form {
-  padding: 15px;
+  /* padding: 15px; */
   border-bottom: 0.2px solid grey;
   border-top: 0.2px solid grey;
   display: flex;
@@ -79,4 +86,9 @@ footer p {
 footer p:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+
+i.delete {
+  display: none;
+  cursor: pointer;
 }
