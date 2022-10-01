@@ -1,6 +1,9 @@
 /* eslint-disable arrow-body-style */
+/* eslint-disable import/no-cycle */
+/* eslint-disable import/no-mutable-exports */
 
 import './style.css';
+import { markCompleted, clearCompleted } from './modules/TaskCompletion.js';
 
 // Grabbing the DOM element for the task container
 const activities = document.querySelector('.activities');
@@ -12,7 +15,8 @@ const input = document.querySelector('.tsk');
 const form = document.querySelector('#addForm');
 
 // Declaring the array to hold the various tasks
-let tasks = JSON.parse(localStorage.getItem('data')) || [];
+/* eslint-disable import/prefer-default-export */
+export let tasks = JSON.parse(localStorage.getItem('data')) || [];
 
 // Add toDo to the local storage
 const addToDo = () => {
@@ -38,8 +42,8 @@ const displayToDos = () => {
     // Append HTML code for various tasks
     task += `<div class="list" key="${item.index}">
   <div class="input">
-    <input class="tsk" type="checkbox" />
-    <input class="tsk list-input" type="text" value="${item.description}" />
+    <input class="tsk checkInput" type="checkbox" ${item.completed ? 'checked' : ''}/>
+    <input class="tsk list-input ${item.completed ? 'strikethrough' : ''}" type="text" value="${item.description}" />
   </div>
   <i class="fa-solid fa-ellipsis-vertical dots"></i>
   <i class="fa-solid fa-trash delete"></i>
@@ -80,6 +84,7 @@ const edit = () => {
     });
   });
 };
+
 // Remove Section
 const remove = () => {
   const deleteButtons = document.querySelectorAll('.delete');
@@ -101,7 +106,6 @@ const remove = () => {
       // Updating LocalStorage
       const convertedTasks = JSON.stringify(tasks);
       localStorage.setItem('data', convertedTasks);
-      // displayToDos();
       window.location.reload();
     });
   });
@@ -110,6 +114,6 @@ const remove = () => {
 addToDo();
 displayToDos();
 edit();
+markCompleted();
+clearCompleted();
 remove();
-
-// background-color: rgb(255, 255, 193);

@@ -77,15 +77,24 @@ footer {
   -moz-box-shadow: 2px 7px 16px -8px rgba(0, 0, 0, 0.75);
 }
 
-footer p {
+footer button {
   font-size: 18px;
   font-weight: 100;
   font-family: 'Open Sans', sans-serif;
+  display: block;
+  width: 100%;
+  border: none;
+  padding: 1em;
+  cursor: pointer;
+  transition: 0.5s;
 }
 
-footer p:hover {
-  cursor: pointer;
-  text-decoration: underline;
+footer button:hover {
+  background-color: rgb(225, 225, 225);
+}
+
+.strikethrough {
+  text-decoration: line-through;
 }
 
 i.delete {
