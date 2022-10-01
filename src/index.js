@@ -1,5 +1,4 @@
 /* eslint-disable arrow-body-style */
-
 import './style.css';
 
 // Grabbing the DOM element for the task container
@@ -10,6 +9,9 @@ const input = document.querySelector('.tsk');
 
 // Getting a form element
 const form = document.querySelector('#addForm');
+
+// getting clear button
+const clearBtn = document.querySelector('.clearBtn');
 
 // Declaring the array to hold the various tasks
 let tasks = JSON.parse(localStorage.getItem('data')) || [];
@@ -38,8 +40,8 @@ const displayToDos = () => {
     // Append HTML code for various tasks
     task += `<div class="list" key="${item.index}">
   <div class="input">
-    <input class="tsk" type="checkbox" />
-    <input class="tsk list-input" type="text" value="${item.description}" />
+    <input class="tsk checkInput" type="checkbox" ${item.completed ? 'checked' : ''}/>
+    <input class="tsk list-input ${item.completed ? 'strikethrough' : ''}" type="text" value="${item.description}" />
   </div>
   <i class="fa-solid fa-ellipsis-vertical dots"></i>
   <i class="fa-solid fa-trash delete"></i>
@@ -80,6 +82,41 @@ const edit = () => {
     });
   });
 };
+
+// Check Completed value
+const markCompleted = () => {
+  let completedValue = false;
+  const checkInputs = document.querySelectorAll('.checkInput');
+  checkInputs.forEach((checkbox) => {
+    checkbox.addEventListener('click', () => {
+      /* eslint-disable no-unused-expressions */
+      checkbox.checked ? completedValue = true : completedValue = false;
+      const key = checkbox.parentElement.parentElement.getAttribute('key');
+      const result = tasks.find((task) => {
+        return String(key) === String(task.index);
+      });
+      // result.description = result.description;
+      result.completed = completedValue;
+      const convertedTasks = JSON.stringify(tasks);
+      localStorage.setItem('data', convertedTasks);
+      window.location.reload();
+    });
+  });
+};
+
+// Clear All Completed Tasks
+clearBtn.addEventListener('click', () => {
+  const uncompletedTasks = tasks.filter((item) => item.completed === false);
+
+  tasks = uncompletedTasks;
+  if (uncompletedTasks.length) {
+    localStorage.setItem('data', JSON.stringify(uncompletedTasks));
+  } else {
+    localStorage.clear();
+  }
+  window.location.reload();
+});
+
 // Remove Section
 const remove = () => {
   const deleteButtons = document.querySelectorAll('.delete');
@@ -101,7 +138,6 @@ const remove = () => {
       // Updating LocalStorage
       const convertedTasks = JSON.stringify(tasks);
       localStorage.setItem('data', convertedTasks);
-      // displayToDos();
       window.location.reload();
     });
   });
@@ -110,6 +146,5 @@ const remove = () => {
 addToDo();
 displayToDos();
 edit();
+markCompleted();
 remove();
-
-// background-color: rgb(255, 255, 193);
